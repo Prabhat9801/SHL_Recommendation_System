@@ -10,6 +10,9 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
 [![Performance](https://img.shields.io/badge/Recall@10-90.4%25-brightgreen.svg)]()
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/Prabhat9801/SHL_Recommendation_System)
+
+**📂 Repository:** [github.com/Prabhat9801/SHL_Recommendation_System](https://github.com/Prabhat9801/SHL_Recommendation_System)
 
 ---
 
