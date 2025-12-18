@@ -1,3 +1,6 @@
+# SHL Assessment Recommendation System - Complete Dependencies
+# Install: pip install -r requirements.txt
+
 # Core Web Framework
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
@@ -17,15 +20,23 @@ scipy==1.11.4
 groq==0.4.2
 python-dotenv==1.0.0
 
-# Web Scraping (for data collection scripts)
+# Web Scraping
 beautifulsoup4==4.12.2
 requests==2.31.0
 
-# Additional dependencies for sentence-transformers
+# Deep Learning (for sentence-transformers)
 torch==2.1.1
 transformers==4.35.2
 tokenizers==0.15.0
 huggingface-hub==0.19.4
 
-# Support packages
+# Additional Support
 python-multipart==0.0.6
+
+# Development Tools (optional)
+jupyter==1.0.0
+notebook==7.0.6
+ipykernel==6.27.1
+
+# PDF Generation (for reports)
+reportlab==4.4.0
