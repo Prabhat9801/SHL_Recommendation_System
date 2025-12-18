@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHL Assessment Recommender - 90.4% Accuracy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 SHL Assessment Recommender</h1>
+            <p class="subtitle">AI-Powered Recommendations with 90.4% Accuracy</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <label for="query">Enter Job Description or Requirements:</label>
+                <textarea 
+                    id="query" 
+                    rows="6" 
+                    placeholder="Example: I need Java developers who can collaborate effectively with business teams..."
+                ></textarea>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="topK">Number of recommendations:</label>
+                        <input type="number" id="topK" value="10" min="1" max="20">
+                    </div>
+                    <button id="submitBtn" onclick="getRecommendations()">
+                        Get Recommendations
+                    </button>
+                </div>
+                
+                <div class="examples">
+                    <p><strong>Try these examples:</strong></p>
+                    <button class="example-btn" onclick="setQuery('I need Java developers who can collaborate effectively')">Java + Collaboration</button>
+                    <button class="example-btn" onclick="setQuery('Looking for mid-level professionals proficient in Python, SQL and JavaScript')">Python/SQL/JS</button>
+                    <button class="example-btn" onclick="setQuery('Hiring analyst who needs cognitive and personality assessment')">Analyst + Personality</button>
+                </div>
+            </section>
+
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing with AI...</p>
+            </div>
+
+            <section id="results" class="results-section" style="display: none;">
+                <h2>Recommended Assessments</h2>
+                <div id="resultsList"></div>
+            </section>
+
+            <div id="error" class="error" style="display: none;"></div>
+        </main>
+
+        <footer>
+            <p>Powered by Groq Llama 3.3 70B | Mean Recall@10: 90.4%</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
