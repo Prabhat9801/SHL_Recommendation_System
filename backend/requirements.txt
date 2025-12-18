@@ -15,17 +15,18 @@ scipy==1.11.4
 
 # LLM Integration
 groq==0.11.0
+httpx==0.27.0
 python-dotenv==1.0.0
 
 # Web Scraping (for data collection scripts)
 beautifulsoup4==4.12.2
 requests==2.31.0
 
-# Additional dependencies for sentence-transformers
+# Deep Learning (for sentence-transformers)
 torch==2.1.1
 transformers==4.35.2
 tokenizers==0.15.0
 huggingface-hub==0.19.4
 
-# Support packages
+# Additional Support
 python-multipart==0.0.6
