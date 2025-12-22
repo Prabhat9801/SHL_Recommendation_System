@@ -218,7 +218,53 @@ Score = 0.35 × TF-IDF +
 
 ---
 
-## 8. Conclusion
+## 8. Deployment
+
+### Production Deployment on Hugging Face Spaces
+
+**Platform:** Hugging Face Spaces (Docker)  
+**Live API:** https://prabhat9801-shl-recommendation-system.hf.space
+
+**Configuration:**
+- **Hardware:** CPU basic (16GB RAM, 2 vCPU) - Free tier
+- **SDK:** Docker
+- **Storage:** Persistent (models cached)
+- **Startup:** Models pre-downloaded during build
+
+**Deployment Architecture:**
+```
+GitHub Repository → Hugging Face Space
+                    ↓
+                Docker Build
+                    ↓
+   Install dependencies (requirements.txt)
+                    ↓
+   Download models (download_models.py)
+   - sentence-transformers/all-MiniLM-L6-v2 (~500MB)
+   - Cached in Docker layers
+                    ↓
+   Start FastAPI Server (backend/main.py)
+   - Port: 7860
+   - Initialize recommendationengine at startup
+                    ↓
+   API Live: https://prabhat9801-shl-recommendation-system.hf.space
+```
+
+**Frontend Deployment:**
+- Platform: Netlify
+- Type: Static site (HTML/CSS/JS)
+- API Integration: Connects to HF Space backend via CORS
+
+**Why Hugging Face Spaces?**
+- ✅ 16GB RAM (vs 512MB on Render free tier)
+- ✅ Perfect for ML models (designed for it)
+- ✅ Persistent storage for cached models
+- ✅ Free tier sufficient for production
+- ✅ Fast startup after initial build (models cached)
+
+---
+
+## 9. Conclusion
 
 **Final Achievement:** 90.4% Mean Recall@10
 
@@ -230,4 +276,10 @@ This system proves that understanding **what experts choose** (training patterns
 
 ---
 
-**System Status:** Production-ready, fully documented, 90.4% performance, ready for deployment.
+**System Status:** Production-ready, fully documented, 90.4% performance, deployed on Hugging Face Spaces.
+
+**Live Demo:**
+- **Backend API:** https://prabhat9801-shl-recommendation-system.hf.space
+- **API Documentation:** https://prabhat9801-shl-recommendation-system.hf.space/docs
+- **GitHub:** https://github.com/Prabhat9801/SHL_Recommendation_System
+
