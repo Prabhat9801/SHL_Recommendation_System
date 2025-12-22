@@ -84,36 +84,30 @@ Interactive Swagger UI with:
 
 ## 🌐 Frontend Deployment
 
-### Platform: Netlify
+### Platform: Render (Static Site)
 
-**Status:** Ready to deploy
+**Live URL:** https://shl-recommendation-system-1-l9az.onrender.com
 
-### Steps:
+**Status:** ✅ Deployed and Live
 
-1. **Go to Netlify:**
-   ```
-   https://app.netlify.com/
-   ```
+### Configuration:
+- **Type:** Static site
+- **Source:** GitHub repository
+- **Branch:** `main`
+- **Root directory:** `frontend`
+- **Build command:** (none)
+- **Publish directory:** `.`
 
-2. **Deploy:**
-   - Click "Add new site" → "Deploy manually"
-   - Drag `frontend/` folder
-   - Wait 30 seconds
-   - Done!
+### API Integration
 
-3. **Configuration:**
-   - Base directory: `frontend`
-   - Build command: (none - static site)
-   - Publish directory: `.`
-
-### Frontend Configuration
-
-The frontend is pre-configured to connect to Hugging Face backend:
+The frontend connects to the Hugging Face Space backend:
 
 ```javascript
 // frontend/app.js
 const API_BASE_URL = 'https://prabhat9801-shl-recommendation-system.hf.space';
 ```
+
+**CORS:** Enabled on backend to allow frontend requests
 
 ---
 
@@ -140,18 +134,33 @@ Required secrets set in Space Settings:
 ```
 User Browser
     ↓
-Frontend (Netlify)
+Frontend (Render Static Site)
+https://shl-recommendation-system-1-l9az.onrender.com
     ↓ (API calls via fetch)
 Backend (Hugging Face Spaces)
+https://prabhat9801-shl-recommendation-system.hf.space
     ↓
 FastAPI Server (port 7860)
     ↓
 Recommendation Engine
-    ├── TF-IDF Features
-    ├── Semantic Embeddings (all-MiniLM-L6-v2)
-    ├── Training Patterns
-    └── LLM Client (Groq)
+    ├── TF-IDF Features (35% weight)
+    ├── Semantic Embeddings (18% weight) - all-MiniLM-L6-v2
+    ├── Training Patterns (20% weight)
+    ├── Technical Skills Boost (12% weight)
+    ├── Soft Skills Boost (5% weight)
+    └── LLM Client (Groq) - Query understanding
 ```
+
+### Complete System URLs
+
+| Component | URL | Status |
+|-----------|-----|--------|
+| **Frontend (User Interface)** | https://shl-recommendation-system-1-l9az.onrender.com | ✅ Live |
+| **Backend API** | https://prabhat9801-shl-recommendation-system.hf.space | ✅ Live |
+| **API Documentation** | https://prabhat9801-shl-recommendation-system.hf.space/docs | ✅ Live |
+| **Health Check** | https://prabhat9801-shl-recommendation-system.hf.space/health | ✅ Live |
+| **GitHub Repository** | https://github.com/Prabhat9801/SHL_Recommendation_System | ✅ Public |
+| **Hugging Face Space** | https://huggingface.co/spaces/Prabhat9801/SHL_Recommendation_System | ✅ Public |
 
 ---
 
@@ -359,8 +368,10 @@ fetch('https://prabhat9801-shl-recommendation-system.hf.space/recommend', {
 
 ---
 
-**Live API:** https://prabhat9801-shl-recommendation-system.hf.space  
+**Live System:** https://shl-recommendation-system-1-l9az.onrender.com  
+**Backend API:** https://prabhat9801-shl-recommendation-system.hf.space  
 **API Docs:** https://prabhat9801-shl-recommendation-system.hf.space/docs  
 **GitHub:** https://github.com/Prabhat9801/SHL_Recommendation_System
 
-**System Status:** ✅ Production Ready | 🚀 Deployed | 📊 90.4% Accuracy
+**System Status:** ✅ Production Ready | 🚀 Fully Deployed | 📊 90.4% Accuracy
+

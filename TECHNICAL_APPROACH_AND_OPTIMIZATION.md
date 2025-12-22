@@ -251,8 +251,9 @@ GitHub Repository → Hugging Face Space
 ```
 
 **Frontend Deployment:**
-- Platform: Netlify
+- Platform: Render (Static Site)
 - Type: Static site (HTML/CSS/JS)
+- Live URL: https://shl-recommendation-system-1-l9az.onrender.com
 - API Integration: Connects to HF Space backend via CORS
 
 **Why Hugging Face Spaces?**
@@ -279,7 +280,9 @@ This system proves that understanding **what experts choose** (training patterns
 **System Status:** Production-ready, fully documented, 90.4% performance, deployed on Hugging Face Spaces.
 
 **Live Demo:**
+- **Frontend:** https://shl-recommendation-system-1-l9az.onrender.com
 - **Backend API:** https://prabhat9801-shl-recommendation-system.hf.space
 - **API Documentation:** https://prabhat9801-shl-recommendation-system.hf.space/docs
 - **GitHub:** https://github.com/Prabhat9801/SHL_Recommendation_System
+
 
