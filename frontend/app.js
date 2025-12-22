@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://shl-recommendation-system-qfgu.onrender.com';  // Render backend
+const API_BASE_URL = 'https://prabhat9801-shl-recommendation-system.hf.space';  // Hugging Face Space backend
 
 // Set example query
 function setQuery(text) {
