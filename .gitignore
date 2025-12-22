@@ -19,6 +19,9 @@ logs/
 vector_storage/
 predicted_test_csv/
 
+# Model cache (downloaded during deployment)
+.model_cache/
+
 # IDE
 .vscode/
 .idea/

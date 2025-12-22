@@ -1,0 +1,174 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                   DEPLOYMENT ARCHITECTURE - QUICK REFERENCE                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ PROJECT STRUCTURE                                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+SHL_Submission/                    ← ROOT DIRECTORY (Repository Root)
+│
+├── Backend Files (Render):
+│   ├── requirements.txt           ← All dependencies
+│   ├── download_models.py         ← Pre-download models
+│   ├── render.yaml                ← Render config
+│   ├── backend/main.py            ← FastAPI server
+│   ├── modules/                   ← Core logic
+│   └── data/                      ← Assessment data
+│
+└── Frontend Files (Netlify):
+    └── frontend/                  ← Static site directory
+        ├── index.html
+        ├── app.js                 ← Calls backend API
+        └── styles.css
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ROOT DIRECTORY FOR EACH PLATFORM                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Platform        │ Root Directory        │ What It Means
+────────────────┼──────────────────────┼─────────────────────────────────────
+Local (Your PC) │ C:\Users\prabh\...   │ Project folder on your computer
+GitHub          │ Repository root       │ Where render.yaml is located
+Render (Backend)│ . (dot/blank)        │ Repository root - runs from here
+Netlify (Front) │ frontend/            │ Subdirectory within repository
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ DEPLOYMENT FLOW                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. BACKEND (Render):
+   
+   GitHub (SHL_Submission/) → Render
+                              ↓
+                         Root Dir: .
+                              ↓
+   pip install -r requirements.txt
+                              ↓
+   python download_models.py (downloads ~500MB)
+                              ↓
+   uvicorn backend.main:app
+                              ↓
+   Backend imports from modules/
+                              ↓
+   ✅ API Live: https://shl-api.onrender.com
+
+2. FRONTEND (Netlify):
+   
+   GitHub (SHL_Submission/frontend/) → Netlify
+                                       ↓
+                                  Base Dir: frontend
+                                       ↓
+                                  Deploy static files
+                                       ↓
+                                  ✅ Site Live: https://shl.netlify.app
+
+3. CONNECTION:
+   
+   User → Frontend (Netlify) → API Call → Backend (Render)
+          https://shl.netlify.app         https://shl-api.onrender.com
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ HOW FRONTEND CONNECTS TO BACKEND                                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+frontend/app.js:
+   const API_BASE_URL = 'https://shl-api.onrender.com';  ← Your Render URL
+   
+   function getRecommendations() {
+       fetch(`${API_BASE_URL}/recommend`, { ... })  ← Calls backend API
+   }
+
+backend/main.py:
+   app.add_middleware(
+       CORSMiddleware,
+       allow_origins=["*"]  ← Allows requests from Netlify
+   )
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ DEPLOYMENT STEPS                                                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+STEP 1: Deploy Backend (Render)
+   → Go to: https://dashboard.render.com/
+   → New Web Service from GitHub
+   → Repository: Prabhat9801/SHL_Recommendation_System
+   → Root Directory: . (blank)
+   → Environment: Python 3
+   → Set GROQ_API_KEY
+   → Deploy (wait 5-10 min)
+   → Get URL: https://shl-api.onrender.com
+
+STEP 2: Update Frontend
+   → Edit frontend/app.js
+   → Change API_BASE_URL to: https://shl-api.onrender.com
+   → Commit and push to GitHub
+
+STEP 3: Deploy Frontend (Netlify)
+   → Go to: https://app.netlify.com/
+   → New site from Git
+   → Repository: Prabhat9801/SHL_Recommendation_System
+   → Base directory: frontend  ← IMPORTANT!
+   → Publish directory: .
+   → Deploy
+   → Get URL: https://shl.netlify.app
+
+STEP 4: Test
+   → Visit: https://shl.netlify.app
+   → Enter query: "Python Developer"
+   → Click "Get Recommendations"
+   → ✅ Should see results!
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RENDER CONFIGURATION (render.yaml)                                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+build Command: pip install -r requirements.txt && python download_models.py
+startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+
+Why this works:
+  - Builds from repository root
+  - Installs all dependencies
+  - Downloads models during build (not runtime!)
+  - Starts backend/main.py
+  - backend/main.py can import from modules/ (parent dir)
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ NETLIFY CONFIGURATION                                                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Base directory: frontend     ← Deploys only the frontend/ folder
+Build command:  (none)       ← Static site, no build needed
+Publish dir:    .            ← Current directory (frontend/)
+
+Why this works:
+  - Only deploys frontend/ folder
+  - Serves index.html, app.js, styles.css
+  - app.js calls backend API via fetch()
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ FINAL URLS                                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Backend API:  https://shl-recommender-api.onrender.com
+Frontend UI:  https://your-site-name.netlify.app
+API Docs:     https://shl-recommender-api.onrender.com/docs
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ TESTING                                                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+Backend:
+  curl https://shl-api.onrender.com/health
+  curl https://shl-api.onrender.com/docs
+
+Frontend:
+  Open: https://shl.netlify.app
+  Test: Enter query and click submit
+
+Integration:
+  Frontend → Backend → Response → Display ✅
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  Read COMPLETE_DEPLOYMENT_GUIDE.md for detailed step-by-step instructions!  ║
+╚══════════════════════════════════════════════════════════════════════════════╝

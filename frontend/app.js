@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://shl-recommendation-system-qfgu.onrender.com';  // Render backend
+const API_BASE_URL = 'http://localhost:8000';  // Render backend
 
 // Set example query
 function setQuery(text) {

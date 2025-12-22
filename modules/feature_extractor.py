@@ -2,6 +2,7 @@
 Feature Extractor Module with Logging & Exception Handling
 Handles TF-IDF and semantic embedding generation
 """
+import os
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer
@@ -100,10 +101,18 @@ class FeatureExtractor:
             if assessments_df is None or len(assessments_df) == 0:
                 raise FeatureExtractionException("Empty assessments dataframe")
             
-            # Initialize model
+            # Initialize model from cache
             if self.embedding_model is None:
                 logger.debug(f"Loading embedding model: {model_name}")
-                self.embedding_model = SentenceTransformer(model_name)
+                
+                # Use cached model directory
+                cache_dir = os.path.join(os.getcwd(), '.model_cache')
+                
+                # Load model from cache (already downloaded during deployment)
+                self.embedding_model = SentenceTransformer(
+                    model_name, 
+                    cache_folder=cache_dir
+                )
             
             # Create rich text representations
             texts = []
