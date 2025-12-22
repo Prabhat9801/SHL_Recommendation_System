@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (keep README.md for Space description)
+docs/
+experiments/
+scraping/
+
+# Logs
+logs/
+*.log
+
+# Generated/cached files (will be created at runtime)
+vector_storage/
+predicted_test_csv/
+.model_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Build artifacts
+*.pyc
+*.pyo
+dist/
+build/
+
+# Deployment configs for other platforms
+render.yaml
+RENDER_*.md
+DEPLOYMENT_*.md
+ORACLE_*.md
+CHEAT_SHEET.txt
+test_low_memory.bat
+LOW_MEMORY*.md
+LOW_MEMORY*.txt
+
+# Keep only essential files for HF Spaces deployment
+# Dockerfile, README.md, requirements.txt, runtime.txt will be included

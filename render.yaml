@@ -17,3 +17,4 @@ services:
       - key: SENTENCE_TRANSFORMERS_HOME
         value: /opt/render/project/src/.model_cache
     healthCheckPath: /health
+

@@ -172,9 +172,18 @@ class FeatureExtractor:
     def get_query_semantic_scores(self, query: str) -> np.ndarray:
         """Compute semantic similarity scores for a query"""
         try:
-            if self.embedding_model is None or self.semantic_embeddings is None:
+            # Check if semantic embeddings exist
+            if self.semantic_embeddings is None:
                 raise FeatureExtractionException("Embeddings not initialized. Call build_semantic_embeddings first.")
             
+            # Handle LOW_MEMORY mode (embedding_model is None, embeddings are zeros)
+            if self.embedding_model is None:
+                logger.debug("LOW_MEMORY mode: returning zero semantic scores")
+                # Return all zeros (semantic matching disabled)
+                num_assessments = self.semantic_embeddings.shape[0]
+                return np.zeros(num_assessments)
+            
+            # Normal mode: compute actual semantic similarity
             logger.debug(f"Computing semantic scores for query: {query[:50]}...")
             query_emb = self.embedding_model.encode([query])
             
