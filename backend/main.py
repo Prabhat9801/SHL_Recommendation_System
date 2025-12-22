@@ -30,35 +30,49 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global recommender (initialized lazily)
+# Global recommender (initialized during startup)
 recommender = None
+
+@app.on_event("startup")
+async def startup_event():
+    """
+    Initialize recommendation engine during startup
+    This prevents timeout on first request
+    """
+    global recommender
+    
+    print("="*80)
+    print("INITIALIZING RECOMMENDATION ENGINE AT STARTUP")
+    print("="*80)
+    
+    # Save current directory
+    current_dir = os.getcwd()
+    
+    # Change to parent directory so data/ can be found
+    backend_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(backend_dir)
+    os.chdir(parent_dir)
+    
+    try:
+        # Initialize engine (will now find data/ folder)
+        print("Loading data and building features...")
+        recommender = RecommendationEngine()
+        recommender.initialize()
+        print("="*80)
+        print("✅ RECOMMENDATION ENGINE READY!")
+        print("="*80)
+    finally:
+        # Restore original directory
+        os.chdir(current_dir)
 
 def get_recommender() -> RecommendationEngine:
     """
-    Get or create the recommendation engine (singleton pattern)
-    Lazy initialization on first request
+    Get the recommendation engine (already initialized at startup)
     """
     global recommender
     
     if recommender is None:
-        print("Initializing modular recommendation engine...")
-        
-        # Save current directory
-        current_dir = os.getcwd()
-        
-        # Change to parent directory so data/ can be found
-        backend_dir = os.path.dirname(os.path.abspath(__file__))
-        parent_dir = os.path.dirname(backend_dir)
-        os.chdir(parent_dir)
-        
-        try:
-            # Initialize engine (will now find data/ folder)
-            recommender = RecommendationEngine()
-            recommender.initialize()
-            print("✅ Recommendation engine ready!\n")
-        finally:
-            # Restore original directory
-            os.chdir(current_dir)
+        raise RuntimeError("Recommendation engine not initialized. This should not happen.")
     
     return recommender
 
